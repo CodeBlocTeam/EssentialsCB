@@ -15,8 +15,7 @@ public class NightCommand implements CommandExecutor {
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		if (!(src instanceof Player)) {
-			src.sendMessage(Text.of(TextColors.RED, "Commande utilisable par un joueur uniquement"));
-			return CommandResult.success();
+			throw new CommandException(Text.of(TextColors.RED, "Commande utilisable par un joueur uniquement"));
 		}
 		World world = ((Player) src).getWorld();
 		world.getProperties().setWorldTime(14000);

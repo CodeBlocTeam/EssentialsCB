@@ -24,8 +24,7 @@ public class GmCommand implements CommandExecutor {
 		Player player;
 		if (! target.isPresent()) {
 			if (! (src instanceof Player)) {
-				src.sendMessage(Text.of(TextColors.RED, "Tentative de changement de mode de jeu d'un utilisateur ou d'une entité non joueur..."));
-				return CommandResult.success();
+				throw new CommandException(Text.of(TextColors.RED, "Tentative de changement de mode de jeu d'un utilisateur ou d'une entité non joueur..."));
 			}
 			player = (Player) src;
 		} else {
@@ -54,8 +53,7 @@ public class GmCommand implements CommandExecutor {
 			src.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "SPECTATEUR"));
 			break;
 		default:
-			src.sendMessage(Text.of(TextColors.RED, "Mode de jeu incorrect. Entrer 0, 1, 2, ou 3 pour survie, créatif, aventure, et spectateur respectivement"));
-			return CommandResult.success();
+			throw new CommandException(Text.of(TextColors.RED, "Mode de jeu incorrect. Entrer 0, 1, 2, ou 3 pour survie, créatif, aventure, et spectateur respectivement"));
 		}
 		return CommandResult.success();
 	}

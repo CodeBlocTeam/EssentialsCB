@@ -22,8 +22,7 @@ public class SunCommand implements CommandExecutor {
 		World world;
 		if (! target.isPresent()) {
 			if (!(src instanceof Player)) {
-				src.sendMessage(Text.of(TextColors.RED, "Veuillez préciser le monde."));
-				return CommandResult.success();
+				throw new CommandException(Text.of(TextColors.RED, "Veuillez préciser le monde."));
 			}
 			world = ((Player) src).getWorld();
 		} else {

@@ -19,40 +19,40 @@ import io.github.codeblocteam.essentials.commands.SunCommand;
 @Plugin(id = "essentialscb", name = "Essentials CB", version = "0.1")
 public class EssentialsCB {
 	
-	private CommandSpec dayCommandSpec = CommandSpec.builder()
+	private CommandSpec dayCmd = CommandSpec.builder()
 			.description(Text.of("Règle l'heure à 6h"))
 			.permission("essentialscb.command.day")
 			.executor(new DayCommand())
 			.build();
 	
-	private CommandSpec nightCommandSpec = CommandSpec.builder()
+	private CommandSpec nightCmd = CommandSpec.builder()
 			.description(Text.of("Règle l'heure à 18h"))
 			.permission("essentialscb.command.night")
 			.executor(new NightCommand())
 			.build();
 	
-	private CommandSpec gmCommandSpec = CommandSpec.builder()
+	private CommandSpec gmCmd = CommandSpec.builder()
 			.description(Text.of("Change le mode de jeu"))
 			.permission("essentialscb.command.gm")
 			.arguments(GenericArguments.onlyOne(GenericArguments.integer(Text.of("mode"))), GenericArguments.optional(GenericArguments.player(Text.of("player"))))
 			.executor(new GmCommand())
 			.build();
 	
-	private CommandSpec sunCommandSpec = CommandSpec.builder()
+	private CommandSpec sunCmd = CommandSpec.builder()
 			.description(Text.of("Programme un temps ensoleillé"))
 			.permission("essentialscb.command.weather.sun")
 			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
 			.executor(new SunCommand())
 			.build();
 	
-	private CommandSpec rainCommandSpec = CommandSpec.builder()
+	private CommandSpec rainCmd = CommandSpec.builder()
 			.description(Text.of("Fait pleuvoir sur le monde"))
 			.permission("essentialscb.command.weather.rain")
 			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
 			.executor(new RainCommand())
 			.build();
 	
-	private CommandSpec stormCommandSpec = CommandSpec.builder()
+	private CommandSpec stormCmd = CommandSpec.builder()
 			.description(Text.of("Programme l'orage dans le monde"))
 			.permission("essentialscb.command.weather.storm")
 			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
@@ -63,11 +63,11 @@ public class EssentialsCB {
 	
 	@Listener
 	public void onServerStart(GameInitializationEvent initialization){
-		cmdManager.register(this, dayCommandSpec, "day", "jour");
-		cmdManager.register(this, nightCommandSpec, "night", "nuit");
-		cmdManager.register(this, gmCommandSpec, "gm", "mode");
-		cmdManager.register(this, sunCommandSpec, "sun", "soleil");
-		cmdManager.register(this, rainCommandSpec, "rain", "pluie");
-		cmdManager.register(this, stormCommandSpec, "storm", "tempete");
+		cmdManager.register(this, dayCmd, "day", "jour");
+		cmdManager.register(this, nightCmd, "night", "nuit");
+		cmdManager.register(this, gmCmd, "gm", "mode");
+		cmdManager.register(this, sunCmd, "sun", "soleil");
+		cmdManager.register(this, rainCmd, "rain", "pluie");
+		cmdManager.register(this, stormCmd, "storm", "tempete");
 }
 }
