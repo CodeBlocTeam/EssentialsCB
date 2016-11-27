@@ -1,5 +1,7 @@
 package io.github.codeblocteam.essentials.commands;
 
+import java.util.Optional;
+
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -8,19 +10,28 @@ import org.spongepowered.api.command.spec.CommandExecutor;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
+import org.spongepowered.api.text.format.TextStyles;
 import org.spongepowered.api.world.World;
+import org.spongepowered.api.world.weather.Weathers;
 
-public class DayCommand implements CommandExecutor {
-	
+public class RainCommand implements CommandExecutor {
+
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
-		if (!(src instanceof Player)) {
-			src.sendMessage(Text.of(TextColors.RED, "Commande utilisable par un joueur uniquement"));
-			return CommandResult.success();
+		Optional<World> target = args.<World>getOne("world");
+		World world;
+		if (! target.isPresent()) {
+			if (!(src instanceof Player)) {
+				src.sendMessage(Text.of(TextColors.RED, "Veuillez préciser le monde."));
+				return CommandResult.success();
+			}
+			world = ((Player) src).getWorld();
+		} else {
+			world = target.get();
 		}
-		World world = ((Player) src).getWorld();
-		world.getProperties().setWorldTime(1);
-		src.sendMessage(Text.of(TextColors.GREEN, "Heure du monde réglée à 6h"));
+		world.setWeather(Weathers.RAIN);
+		src.sendMessage(Text.of(TextColors.GREEN, "Pluie programmée dans ", TextStyles.ITALIC, world.getName()));
 		return CommandResult.success();
 	}
+
 }

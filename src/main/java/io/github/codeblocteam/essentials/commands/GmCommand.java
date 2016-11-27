@@ -16,17 +16,18 @@ import org.spongepowered.api.text.format.TextColors;
 import org.spongepowered.api.text.format.TextStyles;
 
 public class GmCommand implements CommandExecutor {
+	
 	@Override
-	public CommandResult execute(CommandSource source, CommandContext args) throws CommandException {
+	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
 		int mode = (int) args.<Integer>getOne("mode").get();
 		Optional<Player> target = args.<Player>getOne("player");
 		Player player;
 		if (! target.isPresent()) {
-			if (! (source instanceof Player)) {
-				source.sendMessage(Text.of(TextColors.RED, "Tentative de changement de mode de jeu d'un utilisateur ou d'une entité non joueur..."));
+			if (! (src instanceof Player)) {
+				src.sendMessage(Text.of(TextColors.RED, "Tentative de changement de mode de jeu d'un utilisateur ou d'une entité non joueur..."));
 				return CommandResult.success();
 			}
-			player = (Player) source;
+			player = (Player) src;
 		} else {
 			player = target.get();
 		}
@@ -35,25 +36,25 @@ public class GmCommand implements CommandExecutor {
 		case 0:
 			data = player.getGameModeData().set(Keys.GAME_MODE, GameModes.SURVIVAL);
 			player.offer(data);
-			source.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "SURVIE"));
+			src.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "SURVIE"));
 			break;
 		case 1:
 			data = player.getGameModeData().set(Keys.GAME_MODE, GameModes.CREATIVE);
 			player.offer(data);
-			source.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "CREATIF"));
+			src.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "CREATIF"));
 			break;
 		case 2:
 			data = player.getGameModeData().set(Keys.GAME_MODE, GameModes.ADVENTURE);
 			player.offer(data);
-			source.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "AVENTURE"));
+			src.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "AVENTURE"));
 			break;
 		case 3:
 			data = player.getGameModeData().set(Keys.GAME_MODE, GameModes.SPECTATOR);
 			player.offer(data);
-			source.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "SPECTATEUR"));
+			src.sendMessage(Text.of(TextColors.GREEN, "Mode de jeu de " + player.getName() + " changé en ", TextStyles.ITALIC, "SPECTATEUR"));
 			break;
 		default:
-			source.sendMessage(Text.of(TextColors.RED, "Mode de jeu incorrect. Entrer 0, 1, 2, ou 3 pour survie, créatif, aventure, et spectateur respectivement"));
+			src.sendMessage(Text.of(TextColors.RED, "Mode de jeu incorrect. Entrer 0, 1, 2, ou 3 pour survie, créatif, aventure, et spectateur respectivement"));
 			return CommandResult.success();
 		}
 		return CommandResult.success();

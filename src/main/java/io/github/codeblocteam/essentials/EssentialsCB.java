@@ -12,9 +12,13 @@ import org.spongepowered.api.text.Text;
 import io.github.codeblocteam.essentials.commands.DayCommand;
 import io.github.codeblocteam.essentials.commands.GmCommand;
 import io.github.codeblocteam.essentials.commands.NightCommand;
+import io.github.codeblocteam.essentials.commands.RainCommand;
+import io.github.codeblocteam.essentials.commands.StormCommand;
+import io.github.codeblocteam.essentials.commands.SunCommand;
 
 @Plugin(id = "essentialscb", name = "Essentials CB", version = "0.1")
 public class EssentialsCB {
+	
 	private CommandSpec dayCommandSpec = CommandSpec.builder()
 			.description(Text.of("Règle l'heure à 6h"))
 			.permission("essentialscb.command.day")
@@ -34,6 +38,27 @@ public class EssentialsCB {
 			.executor(new GmCommand())
 			.build();
 	
+	private CommandSpec sunCommandSpec = CommandSpec.builder()
+			.description(Text.of("Programme un temps ensoleillé"))
+			.permission("essentialscb.command.weather.sun")
+			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
+			.executor(new SunCommand())
+			.build();
+	
+	private CommandSpec rainCommandSpec = CommandSpec.builder()
+			.description(Text.of("Fait pleuvoir sur le monde"))
+			.permission("essentialscb.command.weather.rain")
+			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
+			.executor(new RainCommand())
+			.build();
+	
+	private CommandSpec stormCommandSpec = CommandSpec.builder()
+			.description(Text.of("Programme l'orage dans le monde"))
+			.permission("essentialscb.command.weather.storm")
+			.arguments(GenericArguments.optional(GenericArguments.world(Text.of("world"))))
+			.executor(new StormCommand())
+			.build();
+	
 	private CommandManager cmdManager = Sponge.getCommandManager();
 	
 	@Listener
@@ -41,5 +66,8 @@ public class EssentialsCB {
 		cmdManager.register(this, dayCommandSpec, "day", "jour");
 		cmdManager.register(this, nightCommandSpec, "night", "nuit");
 		cmdManager.register(this, gmCommandSpec, "gm", "mode");
+		cmdManager.register(this, sunCommandSpec, "sun", "soleil");
+		cmdManager.register(this, rainCommandSpec, "rain", "pluie");
+		cmdManager.register(this, stormCommandSpec, "storm", "tempete");
 }
 }
